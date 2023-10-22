@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import './App.scss';
-import { PropTypes } from '@mui/material';
-import { UserList } from './components/UserList';
 import { AddUserForm } from './components/AddUserForm';
 import { AppContainer } from './components/AppContainer';
-import { Color, User, UserWithColor } from './types';
+import { UserList } from './components/UserList';
 import { prepareUsers } from './helpers';
+import { UserWithColor } from './types';
+import { useUsers } from './useUsers';
 
 const usersFromServer = [
   { id: 1, name: 'Joe Biden', carColorId: 5 },
@@ -23,13 +23,11 @@ const colorosFromServer = [
   { id: 7, name: 'Yellow' },
 ];
 
-const preparedUsers = prepareUsers(usersFromServer, colorosFromServer);
-
 export const App: React.FC = () => {
-  const [users, setUsers] = useState<UserWithColor[]>(preparedUsers);
+  const { isLoading, users } = useUsers();
 
   const addUser = useCallback((name: string, carColorId: number) => {
-    const color = colorosFromServer.find(c => c.id === carColorId);
+    const color = colorosFromServer.find((c) => c.id === carColorId);
     const newUser: UserWithColor = {
       id: Math.random(),
       carColorId,
@@ -37,8 +35,12 @@ export const App: React.FC = () => {
       carColor: color,
     };
 
-    setUsers((prev) => [...prev, newUser]);
+    // setUsers((prev) => [...prev, newUser]);
   }, []);
+
+  if (isLoading) {
+    return <div>Is Loading...</div>;
+  }
 
   return (
     <AppContainer>
