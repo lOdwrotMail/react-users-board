@@ -3,15 +3,7 @@ import './App.scss';
 import { AddUserForm } from './components/AddUserForm';
 import { AppContainer } from './components/AppContainer';
 import { UserList } from './components/UserList';
-import { prepareUsers } from './helpers';
-import { UserWithColor } from './types';
 import { useUsers } from './useUsers';
-
-const usersFromServer = [
-  { id: 1, name: 'Joe Biden', carColorId: 5 },
-  { id: 2, name: 'Elon Musk', carColorId: 4 },
-  { id: 3, name: 'Pan Roman', carColorId: 2 },
-];
 
 const colorosFromServer = [
   { id: 1, name: 'Black' },
@@ -27,15 +19,8 @@ export const App: React.FC = () => {
   const { isLoading, users } = useUsers();
 
   const addUser = useCallback((name: string, carColorId: number) => {
-    const color = colorosFromServer.find((c) => c.id === carColorId);
-    const newUser: UserWithColor = {
-      id: Math.random(),
-      carColorId,
-      name,
-      carColor: color,
-    };
-
-    // setUsers((prev) => [...prev, newUser]);
+    // eslint-disable-next-line no-console
+    console.log('Here we need to add method implementation', name, carColorId);
   }, []);
 
   if (isLoading) {
