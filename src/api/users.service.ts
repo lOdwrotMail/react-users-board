@@ -8,3 +8,7 @@ export const getUsers = () => {
 export const getUser = (id: number) => {
   return client.get<User>(`/users/${id}`);
 };
+
+export const postUser = (user: Omit<User, 'id'>) => {
+  return client.post<User>('/users', user);
+};
